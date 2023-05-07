@@ -3,7 +3,13 @@ const adminController = require("../controller/adminController");
 const auth = require("../middleware/authuser");
 
 const router = express.Router();
-router.post("/login", adminController.adminLogin);
-router.post("/changePassword", adminController.changePassword);
-router.post("/batch", auth.adminprotect, adminController.addBatch);
+router.post("/login", adminController.adminLoginControl);
+router.post("/changePassword", adminController.changePasswordControl);
+router.post("/batch", auth.adminprotect, adminController.addBatchControl);
+router.get(
+  "/batch/byHub",
+  auth.adminprotect,
+  adminController.getBatchByHubControl
+);
+router.post("/addQuestion",auth.adminprotect,adminController.addQuestionControl);
 module.exports = router;

@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const adminUtil = require("../util/adminUtil");
+const CommenUtil = require("../util/commenUtil");
 const { response } = require("express");
 
-const adminLogin = (req, res) =>
+const adminLoginControl = (req, res) =>
   adminUtil
     .douserLogin(req.body)
     .then((response) => {
@@ -27,18 +28,65 @@ const adminLogin = (req, res) =>
       })
     );
 
-const addBatch = (req, res) => {
-  console.log("here");
+const addBatchControl = (req, res) => {
+  adminUtil
+    .addBatch(req.body.batch, req.body.hub)
+    .then(() =>
+      res.json({
+        statusCode: 200,
+        result: { status: true, message: "Batch added." },
+      })
+    )
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err },
+      })
+    );
 };
 
-const changePassword = (req, res) =>
+const changePasswordControl = (req, res) =>
   adminUtil
     .changePassword(req.body)
     .then(() =>
       res.json({ status: true, result: { message: "Password Changed." } })
     );
+
+const getBatchByHubControl = (req, res) =>
+  CommenUtil.getBactchByHub(req.query.hub)
+    .then((details) =>
+      res.json({
+        statusCode: 200,
+        result: { status: true, Batch: details },
+      })
+    )
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err },
+      })
+    );
+
+const addQuestionControl = (req, res) =>
+  adminUtil
+    .addQuestion(req.body)
+    .then(() =>
+      res.json({
+        statusCode: 200,
+        result: { status: true, message: "Question Added." },
+      })
+    )
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err },
+      })
+    );
+
 module.exports = {
-  adminLogin,
-  changePassword,
-  addBatch,
+  adminLoginControl,
+  changePasswordControl,
+  addBatchControl,
+  getBatchByHubControl,
+  addQuestionControl,
 };
