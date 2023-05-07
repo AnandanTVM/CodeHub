@@ -52,7 +52,7 @@ const changePasswordControl = (req, res) =>
       res.json({ status: true, result: { message: "Password Changed." } })
     );
 
-const getBatchByHubControl = (req, res) => {
+const getBatchByHubControl = (req, res) =>
   CommenUtil.getBactchByHub(req.query.hub)
     .then((details) =>
       res.json({
@@ -66,11 +66,27 @@ const getBatchByHubControl = (req, res) => {
         result: { status: false, message: err },
       })
     );
-};
+
+const addQuestionControl = (req, res) =>
+  adminUtil
+    .addQuestion(req.body)
+    .then(() =>
+      res.json({
+        statusCode: 200,
+        result: { status: true, message: "Question Added." },
+      })
+    )
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err },
+      })
+    );
 
 module.exports = {
   adminLoginControl,
   changePasswordControl,
   addBatchControl,
   getBatchByHubControl,
+  addQuestionControl,
 };

@@ -1,9 +1,9 @@
 const ADMIN_COLLECTION = "admin";
 const BATCH_COLLECTION = "batch";
-const HUB_COLLECTION = "hUB";
+const QUESTION_COLLECTION = "question";
 
 module.exports = {
   ADMIN_COLLECTION,
   BATCH_COLLECTION,
-  HUB_COLLECTION,
+  QUESTION_COLLECTION,
 };

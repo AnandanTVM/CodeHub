@@ -11,4 +11,5 @@ router.get(
   auth.adminprotect,
   adminController.getBatchByHubControl
 );
+router.post("/addQuestion",auth.adminprotect,adminController.addQuestionControl);
 module.exports = router;
