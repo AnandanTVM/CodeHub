@@ -53,4 +53,20 @@ module.exports = {
         reject(error.message);
       }
     }),
+  addBatch: (batch, hub) =>
+    new Promise((resolve, reject) => {
+      details = {
+        hub: hub,
+        batch: batch,
+        createdDate: new Date(),
+        updatedDate: new Date(),
+        status: true,
+      };
+      db.get()
+        .collection(collection.BATCH_COLLECTION)
+        .insertOne(details)
+        .then(() => resolve())
+        .catch((err) => reject(err.message));
+    }),
+ 
 };
