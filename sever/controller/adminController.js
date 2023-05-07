@@ -3,8 +3,9 @@ const adminUtil = require("../util/adminUtil");
 const { response } = require("express");
 
 const adminLogin = (req, res) =>
-  adminUtil.douserLogin(req.body).then((response) => {
-    if (response.status) {
+  adminUtil
+    .douserLogin(req.body)
+    .then((response) => {
       const token = jwt.sign(
         {
           userId: response.user._id,
@@ -13,17 +14,31 @@ const adminLogin = (req, res) =>
         },
         process.env.JWT_SECRET
       );
-      return res.json({ status: "ok", user: token });
-    }
-    res.json({ status: "error", user: false });
-  });
+
+      return res.json({
+        statusCode: 200,
+        result: { status: true, user: token },
+      });
+    })
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err.message },
+      })
+    );
+
+const addBatch = (req, res) => {
+  console.log("here");
+};
 
 const changePassword = (req, res) =>
   adminUtil
     .changePassword(req.body)
     .then(() =>
-      res.json({ status: true, result: { message: "Password Changed." } }))
+      res.json({ status: true, result: { message: "Password Changed." } })
+    );
 module.exports = {
   adminLogin,
   changePassword,
+  addBatch,
 };
