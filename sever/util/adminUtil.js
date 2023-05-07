@@ -5,7 +5,7 @@ const collection = require("../config/collection");
 
 module.exports = {
   douserLogin: (userData) =>
-    new Promise(async (resolve) => {
+    new Promise(async (resolve, reject) => {
       const response = {};
       const user = await db
         .get()
@@ -13,17 +13,19 @@ module.exports = {
         .findOne({ email: userData.email });
 
       if (user) {
-        bcrypt.compare(userData.password, user.password).then((status) => {
-          if (status) {
-            response.user = user;
-            response.status = true;
-            resolve(response);
-          } else {
-            resolve({ status: false });
-          }
-        });
+        bcrypt
+          .compare(userData.password, user.password)
+          .then((status) => {
+            if (status) {
+              response.user = user;
+              resolve(response);
+            } else {
+              reject({ message: "Incorrect Password." });
+            }
+          })
+          .catch((err) => reject({ message: err.message }));
       } else {
-        resolve({ status: false });
+        reject({ message: "User Not Found." });
       }
     }),
   changePassword: (userDetails) =>
@@ -37,5 +39,18 @@ module.exports = {
         )
         .then(() => resolve())
         .catch((err) => reject(err));
+    }),
+
+  findAdminById: (id) =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const adminDetails = await db
+          .get()
+          .collection(collection.ADMIN_COLLECTION)
+          .findOne(ObjectId(id));
+        resolve(adminDetails);
+      } catch (error) {
+        reject(error.message);
+      }
     }),
 };
