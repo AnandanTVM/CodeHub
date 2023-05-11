@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
-const { ObjectId } = require("mongodb");
-const db = require("../config/connection");
-const collection = require("../config/collection");
-const { password } = require("../middleware/redamPassword");
+const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
+const db = require('../config/connection');
+const collection = require('../config/collection');
+const { password } = require('../middleware/redamPassword');
 
 module.exports = {
   douserLogin: (userData) =>
@@ -21,12 +21,12 @@ module.exports = {
               response.user = user;
               resolve(response);
             } else {
-              reject({ message: "Incorrect Password." });
+              reject({ message: 'Incorrect Password.' });
             }
           })
           .catch((err) => reject({ message: err.message }));
       } else {
-        reject({ message: "User Not Found." });
+        reject({ message: 'User Not Found.' });
       }
     }),
 
@@ -85,7 +85,7 @@ module.exports = {
         updatedDate: new Date(),
         status: true,
       };
-      console.log(details);
+      // console.log(details);
       db.get()
         .collection(collection.QUESTION_COLLECTION)
         .insertOne(details)

@@ -1,9 +1,11 @@
-const ADMIN_COLLECTION = "admin";
-const BATCH_COLLECTION = "batch";
-const QUESTION_COLLECTION = "question";
+const ADMIN_COLLECTION = 'admin';
+const BATCH_COLLECTION = 'batch';
+const QUESTION_COLLECTION = 'question';
+const PARTICIPANT_COLLECTION = 'participant';
 
 module.exports = {
   ADMIN_COLLECTION,
   BATCH_COLLECTION,
   QUESTION_COLLECTION,
+  PARTICIPANT_COLLECTION,
 };
