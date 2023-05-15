@@ -1,0 +1,7 @@
+.nav{
+    background-color: #34495e !important;
+}
+
+.navbar-collapse{
+    justify-content: space-between;
+}

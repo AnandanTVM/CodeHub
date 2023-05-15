@@ -1,15 +1,18 @@
-const express = require("express");
-const adminController = require("../controller/adminController");
-const auth = require("../middleware/authuser");
+const express = require('express');
+const adminController = require('../controller/adminController');
+const auth = require('../middleware/authuser');
+const { getBatchByHubControl } = require('../controller/CommenController');
 
 const router = express.Router();
-router.post("/login", adminController.adminLoginControl);
-router.post("/changePassword", adminController.changePasswordControl);
-router.post("/batch", auth.adminprotect, adminController.addBatchControl);
-router.get(
-  "/batch/byHub",
+
+router.post('/login', adminController.adminLoginControl);
+router.post('/changePassword', adminController.changePasswordControl);
+router.post('/batch', auth.adminprotect, adminController.addBatchControl);
+router.get('/batch/byHub', auth.adminprotect, getBatchByHubControl);
+router.post(
+  '/addQuestion',
   auth.adminprotect,
-  adminController.getBatchByHubControl
+  adminController.addQuestionControl
 );
 router.post("/question", auth.adminprotect, adminController.addQuestionControl);
 router.get(
@@ -17,4 +20,5 @@ router.get(
   auth.adminprotect,
   adminController.getAllQuestionControl
 );
+
 module.exports = router;
