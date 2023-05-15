@@ -33,4 +33,19 @@ module.exports = {
         })
         .catch((err) => reject(err));
     }),
+
+  dailyLogin: (userId) =>
+    new Promise((resolve, reject) => {
+      db.get()
+        .collection(collection.PARTICIPANT_COLLECTION)
+        .findOne({ _id: ObjectId(userId) })
+        .then((userDetails) => {
+          if (userDetails != null) {
+            resolve(userDetails);
+          } else {
+            reject({ message: 'User Not Found.' });
+          }
+        })
+        .catch((err) => reject({ message: err.message }));
+    }),
 };
