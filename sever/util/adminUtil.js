@@ -92,4 +92,20 @@ module.exports = {
         .then(() => resolve())
         .catch((err) => reject(err.message));
     }),
+
+  getAllQuestion: () =>
+    new Promise(async (resolve, reject) => {
+      try {
+        const questions = await db
+          .get()
+          .collection(collection.QUESTION_COLLECTION)
+          .find({ status: true })
+          .project({ status: 0, updatedDate: 0, createdDate: 0 })
+          .sort({ releasedate: -1 })
+          .toArray();
+        resolve(questions);
+      } catch (error) {
+        reject(error.message);
+      }
+    }),
 };

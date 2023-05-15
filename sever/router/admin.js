@@ -11,5 +11,10 @@ router.get(
   auth.adminprotect,
   adminController.getBatchByHubControl
 );
-router.post("/addQuestion",auth.adminprotect,adminController.addQuestionControl);
+router.post("/question", auth.adminprotect, adminController.addQuestionControl);
+router.get(
+  "/question",
+  auth.adminprotect,
+  adminController.getAllQuestionControl
+);
 module.exports = router;
