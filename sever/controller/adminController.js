@@ -67,9 +67,26 @@ const addQuestionControl = (req, res) =>
       })
     );
 
+const getAllQuestionControl = (req, res) =>
+  adminUtil
+    .getAllQuestion()
+    .then((question) =>
+      res.json({
+        statusCode: 200,
+        result: { status: true, questions: question },
+      })
+    )
+    .catch((err) =>
+      res.json({
+        statusCode: 404,
+        result: { status: false, message: err },
+      })
+    );
+
 module.exports = {
   adminLoginControl,
   changePasswordControl,
   addBatchControl,
   addQuestionControl,
+  getAllQuestionControl,
 };
